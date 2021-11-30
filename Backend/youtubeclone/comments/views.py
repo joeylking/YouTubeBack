@@ -1,3 +1,4 @@
+from django.http.response import Http404
 from .models import Comment
 from .serializers import CommentSerializer
 from rest_framework.views import APIView
@@ -7,11 +8,11 @@ from rest_framework import status
 class VideoComments(APIView):
     
     def get(self, request, video_id):
-        comment = Comment.objects.filter(video_id=video_id)
-        serializer = CommentSerializer(comment, many=True)
+        comments = Comment.objects.filter(video_id=video_id)
+        serializer = CommentSerializer(comments, many=True)
         return Response(serializer.data)
 
-    def post(self, request):
+    def post(self, request, video_id):
         serializer = CommentSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
