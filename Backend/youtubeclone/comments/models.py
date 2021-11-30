@@ -9,7 +9,7 @@ class Comment(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     likes = models.PositiveIntegerField(default=0)
     dislikes = models.PositiveIntegerField(default=0)
-    reply = models.ForeignKey('Comment', on_delete=models.CASCADE, null=True, blank=True, related_name='replies')
+    reply = models.ForeignKey('Comment', on_delete=models.CASCADE, related_name="replies", blank=True, null=True)
 
     def __str__(self):
         return self.author
